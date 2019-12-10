@@ -6,7 +6,7 @@ from marshmallow import Schema, fields
 class Route(db.Model):
     __tablename__ = "routes"
     id = db.Column(db.Integer, primary_key=True)
-    phone = db.Column(db.Integer, db.ForeignKey("accounts.phone"))
+    phone = db.Column(db.String(15), db.ForeignKey("accounts.phone"))
     start_location = db.Column(db.String(100), nullable=False)
     start_location_type = db.Column(db.String(20), nullable=False)
     end_location = db.Column(db.String(100), nullable=False)

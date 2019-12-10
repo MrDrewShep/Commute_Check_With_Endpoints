@@ -3,9 +3,9 @@ from . import db
 
 class Account(db.Model):
     __tablename__ = "accounts"
-    phone = db.Column(db.Integer, primary_key=True)
+    phone = db.Column(db.String(15), primary_key=True)
     otp = db.Column(db.String(300))
-    otp_valid_until = db.Column(db.DateTime)
+    otp_expiration = db.Column(db.DateTime)
     fname = db.Column(db.String(20), nullable=False)
     lname = db.Column(db.String(25), nullable=False)
     created_at = db.Column(db.DateTime)
@@ -14,17 +14,29 @@ class Account(db.Model):
     def __init__(self, phone, fname, lname):
         self.phone = phone
         self.otp = None
-        self.otp_valid_until = None
+        self.otp_expiration = None
         self.fname = fname
         self.lname = lname
         now = datetime.utcnow()
         self.created_at = now
         self.last_modified = now
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return f'Account {self.phone} successfully created.'
+
+    def update(self, to_change):
+        for key, value in to_change.items():
+            setattr(self, key, value)
+        self.last_modified = datetime.utcnow()
+        db.session.commit()
+        return self
+
     # TODO determine if SAVE/DELETE on the account level are needed
 
     @staticmethod
-    def is_account(phone):
+    def get_account(phone):
         return Account.query.filter_by(phone=phone).first()
 
     

@@ -1,6 +1,7 @@
 .vscode/
 /EFA_docs/
 /venv/
+/migrations/
 __pycache__
 
 beta_app.py

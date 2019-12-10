@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple Map</title>
+  <meta name="viewport" content="initial-scale=1.0">
+  <meta charset="utf-8">
+  <style>
+
+    #myform {
+      margin-top: 100px;
+      margin-left: 100px;
+    }
+
+    form {
+      display: table;
+    }
+
+    form p {
+      display: table-row;
+    }
+
+    form label {
+      display: table-cell;
+      padding-right: 10px;
+      text-align: right;
+    }
+
+    form input {
+      display: table-cell;
+    }
+
+    .texttip {
+      color: grey;
+      font-style: italic;
+    }
+
+    .controls {
+      width: 300px;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="myform">
+    <form id="authenticate" method="post" action="http://localhost:5000/account/authenticate">
+      <fieldset>
+        <legend>Enter the verification code sent to your phone:</legend>
+        <p>
+          <label for="">Verification code:</label>
+          <input type="test" name="verification_code">
+        </p>
+        <p>
+          <label for=""></label>
+          <input type="submit" value="Sign In">
+        </p>
+      </fieldset>
+    </form>
+    <br>
+    <br>
+  </div>
+</body>
+
+</html>
