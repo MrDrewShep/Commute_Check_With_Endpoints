@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple Map</title>
+  <meta name="viewport" content="initial-scale=1.0">
+  <meta charset="utf-8">
+  <style>
+    #map {
+      margin-top: 100px;
+      margin-left: 100px;
+      height: 500px;
+      width: 700px;
+    }
+
+    #myform {
+      margin-top: 100px;
+      margin-left: 100px;
+    }
+
+    #registration_form {
+      display: table;
+    }
+
+    #registration_form p {
+      display: table-row;
+    }
+
+    #registration_form label {
+      display: table-cell;
+      padding-right: 10px;
+      text-align: right;
+    }
+
+    #registration_form input {
+      display: table-cell;
+    }
+
+    .texttip {
+      color: grey;
+      font-style: italic;
+    }
+
+    .controls {
+      width: 300px;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <div class="myform">
+    <!--removed $event from the function call, which was preventing the function from running-->
+    <form id="registration_form" method="post" onsubmit="submit_preferred_route()" action="http://localhost:5000/test" target="_blank">
+      <p>
+        <label for="">Start location:</label>
+        <select name="start_location_type" id="">
+          <option value="home">Home</option>
+          <option value="work" selected>Work</option>
+        </select>
+        <input type="text" class="controls" placeholder="Start typing here" id="pac-input-start">
+      </p>
+      <p>
+        <label for="">End location:</label>
+        <select name="end_location_type" id="">
+          <option value="home" selected>Home</option>
+          <option value="work">Work</option>
+        </select>
+        <input type="text" class="controls" placeholder="Start typing here" id="pac-input-end">
+      </p>
+
+      <br>
+
+      <p>
+        <label for="">First name:</label>
+        <input type="text" name="fname" id="fname">
+      </p>
+      <p>
+        <label for="">Last name:</label>
+        <input type="text" name="lname">
+      </p>
+      <p>
+        <label for="">Phone:</label>
+        <input type="tel" name="phone"><font class="texttip"> 123 456 7890</font>
+      </p>
+      <p>
+        <label for="">Run at:</label>
+        <input type="time" name="time_to_run" id="">
+        <select name="timezone">
+            <option timeZoneId="5" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Pacific Time (US & Canada)</option>
+            <option timeZoneId="9" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Mountain Time (US & Canada)</option>
+            <option timeZoneId="11" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Central Time (US & Canada)</option>
+            <option timeZoneId="15" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5" selected>(GMT-05:00) Eastern Time (US & Canada)</option>
+        </select>
+      </p>
+      <p>
+        <label for="">On these days of the week:</label>
+        <input type="checkbox" value="Sunday" name="Sunday"> Sunday <br>
+        <input type="checkbox" value="Monday" name="Monday"> Monday <br>
+        <input type="checkbox" value="Tuesday" name="Tuesday"> Tuesday <br>
+        <input type="checkbox" value="Wednesday" name="Wednesday"> Wednesday <br>
+        <input type="checkbox" value="Thursday" name="Thursday"> Thursday <br>
+        <input type="checkbox" value="Friday" name="Friday"> Friday <br>
+        <input type="checkbox" value="Saturday" name="Saturday"> Saturday <br>  
+      </p>
+      <p>
+        <label for="">Delay tolerance:</label>
+        <select name="tolerance" id="">
+          <option value="1">1 min</option>
+          <option value="2">2 min</option>
+          <option value="3">3 min</option>
+          <option value="4">4 min</option>
+          <option value="5">5 min</option>
+          <option value="6">6 min</option>
+          <option value="7">7 min</option>
+          <option value="8">8 min</option>
+          <option value="9">9 min</option>
+          <option value="10">10 min</option>
+          <option value="11">11 min</option>
+          <option value="12">12 min</option>
+          <option value="13">13 min</option>
+          <option value="14">14 min</option>
+          <option value="15">15 min</option>
+        </select>
+      </p>
+      <p>
+        <label for=""></label>
+        <label for="" style="text-align:left;"><font class="texttip">Alerts are only sent if an alternate route exists which is faster than your preferred route + your delay tolerance.</font></label>
+      </p>
+      <br>
+      <p>
+        <label for=""></label>
+        <input type="submit" value="Sign me up">
+      </p>
+      <input type="hidden" id="preferred_route_info" name="google_response">
+    </form>
+    <br>
+    <br>
+  </div>
+</body>
+
+</html>

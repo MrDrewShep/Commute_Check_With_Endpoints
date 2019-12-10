@@ -1,5 +1,7 @@
 .vscode/
 /EFA_docs/
 /venv/
+__pycache__
 
 beta_app.py
+before_running_the_app.txt
