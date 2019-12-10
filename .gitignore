@@ -1,3 +1,5 @@
 .vscode/
 /EFA_docs/
 /venv/
+
+beta_app.py

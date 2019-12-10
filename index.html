@@ -6,8 +6,6 @@
   <meta name="viewport" content="initial-scale=1.0">
   <meta charset="utf-8">
   <style>
-    /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
     #map {
       margin-top: 100px;
       margin-left: 100px;
@@ -47,7 +45,6 @@
       width: 300px;
     }
 
-    /* Optional: Makes the sample page fill the window. */
     html,
     body {
       height: 100%;
@@ -64,7 +61,7 @@
     <form id="registration_form" method="post" onsubmit="submit_preferred_route()" action="http://localhost:5000/test" target="_blank">
       <p>
         <label for="">Start location:</label>
-        <select name="start_type" id="">
+        <select name="start_location_type" id="">
           <option value="home">Home</option>
           <option value="work" selected>Work</option>
         </select>
@@ -72,7 +69,7 @@
       </p>
       <p>
         <label for="">End location:</label>
-        <select name="start_type" id="">
+        <select name="end_location_type" id="">
           <option value="home" selected>Home</option>
           <option value="work">Work</option>
         </select>
@@ -96,6 +93,12 @@
       <p>
         <label for="">Run at:</label>
         <input type="time" name="time_to_run" id="">
+        <select name="timezone">
+            <option timeZoneId="5" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Pacific Time (US & Canada)</option>
+            <option timeZoneId="9" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Mountain Time (US & Canada)</option>
+            <option timeZoneId="11" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Central Time (US & Canada)</option>
+            <option timeZoneId="15" gmtAdjustment="GMT-05:00" useDaylightTime="1" value="-5" selected>(GMT-05:00) Eastern Time (US & Canada)</option>
+        </select>
       </p>
       <p>
         <label for="">On these days of the week:</label>
@@ -218,7 +221,7 @@
 
     function submit_preferred_route(e) {
       let hiddenbox = document.getElementById('preferred_route_info');
-      hiddenbox.value = preferred_route;
+      // hiddenbox.value = preferred_route;  for some reason it wasn't working to pass the object through in the http request
       hiddenbox.value = JSON.stringify(preferred_route);
       console.log(preferred_route);
       e.preventDefault();
