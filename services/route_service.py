@@ -3,6 +3,8 @@ from datetime import time
 
 def parse_waypoints(google_response):
     # TODO
+    print(google_response)
+    
     return "waypoints go here"
 
 def create_route(my_account, form_data):

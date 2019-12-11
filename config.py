@@ -6,6 +6,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     AMAZON_API_KEY = os.getenv('AMAZON_API_KEY')
+    GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
     JWT_SECRET_KEY = os.getenv('SECRET_KEY')
     JWT_TOKEN_LOCATION = 'cookies'
     JWT_COOKIE_CSRF_PROTECT = False

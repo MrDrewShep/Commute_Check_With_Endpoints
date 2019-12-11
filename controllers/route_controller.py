@@ -3,7 +3,8 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from services.account_service import is_account
 from services.route_service import create_route
 from datetime import time, timedelta
-# TODO from services.route_services import ***
+import json
+import os
 
 route_blueprint = Blueprint("route_api", __name__)
 
@@ -22,14 +23,12 @@ def home():
 def new_route():
     my_account = is_account(get_jwt_identity())
     if request.method == "GET":
-        return render_template("new_route.html")
+        GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
+        return render_template("new_route.html", gm_api_key=GOOGLE_MAPS_API_KEY)
     elif request.method == "POST":
-        data = request.form
-        # tm = data["local_run_time"]
-        # print(tm, type(tm))
-        # tmm = time(int(tm[:2]) - int(data["local_timezone_offset"]), int(tm[3:]))
-        # print(tmm, type(tmm))
-        # return "end"
-        return data
-        return create_route(my_account, data)
+        form_data = request.form
+        google_response = json.loads(form_data["google_response"])
+        return google_response
+        return form_data["google_response"]["request"]["origin"]["query"]
+        return create_route(my_account, form_data)
         
