@@ -33,8 +33,6 @@ class Account(db.Model):
         db.session.commit()
         return self
 
-    # TODO determine if SAVE/DELETE on the account level are needed
-
     @staticmethod
     def get_account(phone):
         return Account.query.filter_by(phone=phone).first()
