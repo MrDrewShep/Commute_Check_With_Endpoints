@@ -2,6 +2,7 @@
 /EFA_docs/
 /venv/
 /migrations/
+misc_code/
 __pycache__
 
 beta_app.py

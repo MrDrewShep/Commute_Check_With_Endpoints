@@ -5,6 +5,7 @@ from services.route_service import create_route
 from datetime import time, timedelta
 import json
 import os
+from services.route_service import parse_waypoints  # TODO delete once ready
 
 route_blueprint = Blueprint("route_api", __name__)
 
@@ -27,8 +28,8 @@ def new_route():
         return render_template("new_route.html", gm_api_key=GOOGLE_MAPS_API_KEY)
     elif request.method == "POST":
         form_data = request.form
-        google_response = json.loads(form_data["google_response"])
-        return google_response
-        return form_data["google_response"]["request"]["origin"]["query"]
+
+        google_response = json.loads(form_data["google_response"])   #TODO delete once done
+        return parse_waypoints_for_testing(google_response)    #TODO delete once done
         return create_route(my_account, form_data)
         
