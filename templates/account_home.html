@@ -12,26 +12,56 @@
     Name: {{my_account.fname}} {{my_account.lname}} <br>
 
     <br><a href="/route/new">Add a Route</a>
-    <br><a href="/submit">Edit a Route</a>
 
     <br><br>
 
     <table border="1">
         <tr>
             <td>Active</td>
+            <td></td>
             <td>Start Location</td>
             <td>End Location</td>
             <td>Local Run Time</td>
             <td>Delay Tolerance</td>
-            <td>Days to Run</td>
+            <td colspan="7">Days to Run</td>
         </tr>
-        <!-- {% for i in my_data %}
+        {% for i in my_routes %}
         <tr>
-            <td>{{i.index}}</td>
-            <td>{{i.topic}}</td>
-            <td>{{i.info}}</td>
+            <td>
+                {% if i.active %}
+                Activate/<a href="toggle_active_status/{{i.id}}">Deactivate</a>
+                {% else %}
+                <a href="toggle_active_status/{{i.id}}">Activate</a>/Deactivate
+                {% endif %}
+            </td>
+            <td>link to edit route</td>
+            <td>{{i.start_location}}</td>
+            <td>{{i.end_location}}</td>
+            <td>{{i.local_run_time}}</td>
+            <td>{{i.delay_tolerance}}</td>
+            <td>
+                {% if i.run_sunday %}S{% endif %}
+            </td>
+            <td>
+                {% if i.run_monday %}M{% endif %}
+            </td>
+            <td>
+                {% if i.run_tuesday %}T{% endif %}
+            </td>
+            <td>
+                {% if i.run_wednesday %}W{% endif %}
+            </td>
+            <td>
+                {% if i.run_thursday %}T{% endif %}
+            </td>
+            <td>
+                {% if i.run_friday %}F{% endif %}
+            </td>
+            <td>
+                {% if i.run_saturday %}S{% endif %}
+            </td>
         </tr>
-        {% endfor %} -->
+        {% endfor %}
     </table>
 
     <br>

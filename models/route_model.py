@@ -12,7 +12,7 @@ class Route(db.Model):
     start_location_type = db.Column(db.String(20), nullable=False)
     end_location = db.Column(db.String(100), nullable=False)
     end_location_type = db.Column(db.String(20), nullable=False)
-    waypoints = db.Column(db.String(600))
+    waypoints = db.Column(db.String(800))
     run_time = db.Column(db.Time, nullable=False)
     local_run_time = db.Column(db.Time, nullable=False)
     local_timezone_offset = db.Column(db.Integer, nullable=False)
@@ -69,13 +69,20 @@ class Route(db.Model):
         self.created_at = now
         self.last_modified = now
 
-    # TODO def save/update
     def save(self):
         db.session.add(self)
         db.session.commit()
         return f'Route successfully added.'
 
+    # TODO def save/update
+    
     # TODO def delete
+
+    def toggle_active_status(self):
+        self.active = True if not self.active else False
+        db.session.add(self)
+        db.session.commit()
+        return f'Changes made successfully.'
 
     @staticmethod
     def get_route(route_id):
@@ -83,7 +90,7 @@ class Route(db.Model):
 
     @staticmethod
     def get_all_routes(phone):
-        return Route.query.filter_by(phone=phone)
+        return Route.query.filter_by(phone=phone).order_by(Route.id)
     
     # TODO do we need get_route_owner
 

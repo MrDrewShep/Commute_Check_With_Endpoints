@@ -1,6 +1,8 @@
-from models.route_model import Route
+from models.route_model import Route, RouteSchema
 from datetime import time
 import json
+
+route_schema = RouteSchema()
 
 def parse_start_location(google_response):
     start_location = google_response["routes"][0]["legs"][0]["start_address"]
@@ -40,13 +42,13 @@ def parse_waypoints(google_response):
         for step in leg["steps"]:
             if step["distance"]["value"] in distances_qualifying_for_waypoints_list:
                 waypoints += str(step["end_location"]["lat"])[:10] + "%2C" + str(step["end_location"]["lng"])[:10] + "%7C"
-                waypoints += step["instructions"]
 
     # Appends the ending points to the waypoint string
     waypoints += str(google_response["routes"][0]["legs"][0]["end_location"]["lat"])[:10]
     waypoints += "%2C"
     waypoints += str(google_response["routes"][0]["legs"][0]["end_location"]["lng"])[:10]
-       
+    print(len(waypoints))
+    print(waypoints)
     return waypoints
 
 def create_route(my_account, form_data):
@@ -80,3 +82,19 @@ def create_route(my_account, form_data):
     new_route.save()
     return "successssssss"
     
+def get_single_route(route_id):
+    route = Route.get_route(route_id)
+    route_dump = route_schema.dump(route)
+    return route_dump
+
+def get_all_routes(phone):
+    routes = Route.get_all_routes(phone)
+    route_dump = route_schema.dump(routes, many=True)
+    return route_dump
+
+def toggle_route_active_status(my_account, route_id):
+    route = Route.get_route(route_id)
+    if str(my_account.phone) == str(route.phone):
+        route.toggle_active_status()
+    return f'Successful'
+        
