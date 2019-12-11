@@ -6,11 +6,13 @@ from marshmallow import Schema, fields
 class Route(db.Model):
     __tablename__ = "routes"
     id = db.Column(db.Integer, primary_key=True)
+    active = db.Column(db.Boolean, nullable=False)
     phone = db.Column(db.String(15), db.ForeignKey("accounts.phone"))
     start_location = db.Column(db.String(100), nullable=False)
     start_location_type = db.Column(db.String(20), nullable=False)
     end_location = db.Column(db.String(100), nullable=False)
     end_location_type = db.Column(db.String(20), nullable=False)
+    waypoints = db.Column(db.String(600))
     run_time = db.Column(db.Time, nullable=False)
     local_run_time = db.Column(db.Time, nullable=False)
     local_timezone_offset = db.Column(db.Integer, nullable=False)
@@ -46,10 +48,12 @@ class Route(db.Model):
 
     def __init__(self, route_data):
         self.phone = route_data["phone"]
+        self.active = True
         self.start_location = route_data["start_location"]
         self.start_location_type = route_data["start_location_type"]
         self.end_location = route_data["end_location"]
         self.end_location_type = route_data["end_location_type"]
+        self.waypoints = route_data["waypoints"]
         self.run_time = route_data["run_time"]
         self.local_run_time = route_data["local_run_time"]
         self.local_timezone_offset = route_data["local_timezone_offset"]
@@ -66,6 +70,10 @@ class Route(db.Model):
         self.last_modified = now
 
     # TODO def save/update
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+        return f'Route successfully added.'
 
     # TODO def delete
 
@@ -81,11 +89,13 @@ class Route(db.Model):
 
 class RouteSchema(Schema):
     id = fields.Int(dump_only=True)
+    active = fields.Bool(dump_only=True)
     phone = fields.Int(dump_only=True)
     start_location = fields.Str(dump_only=True)
     start_location_type = fields.Str(dump_only=True)
     end_location = fields.Str(dump_only=True)
     end_location_type = fields.Str(dump_only=True)
+    waypoints = fields.Str(dump_only=True)
     run_time = fields.Time(dump_only=True)
     local_run_time = fields.Time(dump_only=True)
     local_timezone_offset = fields.Int(dump_only=True)

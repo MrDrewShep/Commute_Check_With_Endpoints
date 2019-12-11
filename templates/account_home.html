@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Commute Check</title>
+</head>
+<body>
+
+    Phone: {{my_account.phone}} <br>
+    Name: {{my_account.fname}} {{my_account.lname}} <br>
+
+    <br><a href="/route/new">Add a Route</a>
+    <br><a href="/submit">Edit a Route</a>
+
+    <br><br>
+
+    <table border="1">
+        <tr>
+            <td>Active</td>
+            <td>Start Location</td>
+            <td>End Location</td>
+            <td>Local Run Time</td>
+            <td>Delay Tolerance</td>
+            <td>Days to Run</td>
+        </tr>
+        <!-- {% for i in my_data %}
+        <tr>
+            <td>{{i.index}}</td>
+            <td>{{i.topic}}</td>
+            <td>{{i.info}}</td>
+        </tr>
+        {% endfor %} -->
+    </table>
+
+    <br>
+    <br>
+
+
+</body>
+</html>

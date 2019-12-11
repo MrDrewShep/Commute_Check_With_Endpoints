@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <style>
     #map {
-      margin-top: 100px;
+      margin-top: 0px;
       margin-left: 100px;
       height: 500px;
       width: 700px;
@@ -55,17 +55,24 @@
 </head>
 
 <body>
+  <p>
+    <ul>
+      <li>Step 1: Type your start and end locations</li>
+      <li>Step 2: Drag the map to match your preferred route. This is the route against which the service will check for faster alternatives.</li>
+      <li>Step 3: Fill out the remainder of the form.</li>
+    </ul>
+  </p>
   <div id="map"></div>
   <div class="myform">
     <!--removed $event from the function call, which was preventing the function from running-->
-    <form id="registration_form" method="post" onsubmit="submit_preferred_route()" action="http://localhost:5000/test" target="_blank">
+    <form id="registration_form" method="post" onsubmit="submit_preferred_route()" action="http://localhost:5000/route/new" target="_blank">
       <p>
         <label for="">Start location:</label>
         <select name="start_location_type" id="">
           <option value="home">Home</option>
           <option value="work" selected>Work</option>
         </select>
-        <input type="text" class="controls" placeholder="Start typing here" id="pac-input-start">
+        <input type="text" class="controls" placeholder="Start typing here" id="pac-input-start" name="start_location">
       </p>
       <p>
         <label for="">End location:</label>
@@ -73,27 +80,13 @@
           <option value="home" selected>Home</option>
           <option value="work">Work</option>
         </select>
-        <input type="text" class="controls" placeholder="Start typing here" id="pac-input-end">
+        <input type="text" class="controls" placeholder="Start typing here" id="pac-input-end" name="end_location">
       </p>
-
       <br>
-
-      <p>
-        <label for="">First name:</label>
-        <input type="text" name="fname" id="fname">
-      </p>
-      <p>
-        <label for="">Last name:</label>
-        <input type="text" name="lname">
-      </p>
-      <p>
-        <label for="">Phone:</label>
-        <input type="tel" name="phone"><font class="texttip"> 123 456 7890</font>
-      </p>
       <p>
         <label for="">Run at:</label>
-        <input type="time" name="time_to_run" id="">
-        <select name="timezone">
+        <input type="time" name="local_run_time" id="">
+        <select name="local_timezone_offset">
             <option timeZoneId="5" gmtAdjustment="GMT-08:00" useDaylightTime="1" value="-8">(GMT-08:00) Pacific Time (US & Canada)</option>
             <option timeZoneId="9" gmtAdjustment="GMT-07:00" useDaylightTime="1" value="-7">(GMT-07:00) Mountain Time (US & Canada)</option>
             <option timeZoneId="11" gmtAdjustment="GMT-06:00" useDaylightTime="1" value="-6">(GMT-06:00) Central Time (US & Canada)</option>
@@ -112,7 +105,7 @@
       </p>
       <p>
         <label for="">Delay tolerance:</label>
-        <select name="tolerance" id="">
+        <select name="delay_tolerance" id="">
           <option value="1">1 min</option>
           <option value="2">2 min</option>
           <option value="3">3 min</option>
