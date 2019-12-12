@@ -19,5 +19,9 @@ app.register_blueprint(route_blueprint, url_prefix="/route")
 def home():
     return render_template("index.html")
 
+@jwt.expired_token_loader
+def my_expired_token_callback(expired_token):
+    return redirect('/')
+
 if __name__ == "__main__":
     app.run()

@@ -17,7 +17,7 @@
 
     <table border="1">
         <tr>
-            <td>Active</td>
+            <td colspan="2">Active</td>
             <td></td>
             <td>Start Location</td>
             <td>End Location</td>
@@ -27,13 +27,13 @@
         </tr>
         {% for i in my_routes %}
         <tr>
-            <td>
-                {% if i.active %}
-                Activate/<a href="toggle_active_status/{{i.id}}">Deactivate</a>
-                {% else %}
-                <a href="toggle_active_status/{{i.id}}">Activate</a>/Deactivate
-                {% endif %}
-            </td>
+            {% if i.active %}
+            <td><b>Active</b></td>
+            <td>(<a href="toggle_active_status/{{i.id}}">Toggle</a>)</td>
+            {% else %}
+            <td><b>Inactive</b></td>
+            <td>(<a href="toggle_active_status/{{i.id}}">Toggle</a>)</td>
+            {% endif %}
             <td>link to edit route</td>
             <td>{{i.start_location}}</td>
             <td>{{i.end_location}}</td>

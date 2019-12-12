@@ -15,12 +15,14 @@ def parse_end_location(google_response):
 def parse_waypoints(google_response):
     """Creates a waypoint string that can be directly placed into a URI for Google Maps"""
 
+    waypoints = ""
+
     # Appends the starting point to the waypoint string
-    waypoints = str(len(google_response["routes"][0]["legs"][0]["steps"])) + "via:"
-    waypoints += str(google_response["routes"][0]["legs"][0]["start_location"]["lat"])[:10]
-    waypoints += "%2C"
-    waypoints += str(google_response["routes"][0]["legs"][0]["start_location"]["lng"])[:10]
-    waypoints += "%7C"
+    # waypoints += "via:"
+    # waypoints += str(google_response["routes"][0]["legs"][0]["start_location"]["lat"])[:10]
+    # waypoints += "%2C"
+    # waypoints += str(google_response["routes"][0]["legs"][0]["start_location"]["lng"])[:10]
+    # waypoints += "%7C"
 
     # Google can only accept 23 lat/lng waypoints, beyond start/end locations
     # If more than 23 intermediate waypoints in the user's route, we need to
@@ -41,12 +43,15 @@ def parse_waypoints(google_response):
     for leg in google_response["routes"][0]["legs"]:
         for step in leg["steps"]:
             if step["distance"]["value"] in distances_qualifying_for_waypoints_list:
+                waypoints += "via:"
                 waypoints += str(step["end_location"]["lat"])[:10] + "%2C" + str(step["end_location"]["lng"])[:10] + "%7C"
+    waypoints = waypoints[:-3]
 
     # Appends the ending points to the waypoint string
-    waypoints += str(google_response["routes"][0]["legs"][0]["end_location"]["lat"])[:10]
-    waypoints += "%2C"
-    waypoints += str(google_response["routes"][0]["legs"][0]["end_location"]["lng"])[:10]
+    # waypoints += "via:"
+    # waypoints += str(google_response["routes"][0]["legs"][0]["end_location"]["lat"])[:10]
+    # waypoints += "%2C"
+    # waypoints += str(google_response["routes"][0]["legs"][0]["end_location"]["lng"])[:10]
     print(len(waypoints))
     print(waypoints)
     return waypoints
