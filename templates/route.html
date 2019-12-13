@@ -190,21 +190,13 @@
       var end_location_length = document.getElementById('pac-input-end').value.length;
       
       if (start_location_length > 0 && end_location_length > 0) {
-        var waypoints_data = {{waypoints_json_string | safe }};
+        var waypoints_data = {% if waypoints_into_array %}{{waypoints_into_array | safe }}{% else %}[]{% endif %};
         for (waypoint of waypoints_data) {
           waypoints_array.push({
             location: new google.maps.LatLng(Number(waypoint.lat), Number(waypoint.lng)),
             stopover: false
           });
         };
-
-        // for (var i = 0; i < waypoints_data.length; i++) {
-        //   waypoints_array.push({
-        //     location: new google.maps.LatLng(waypoints_data[i].lat, waypoints_data[i].lng),
-        //     stopover: false
-        //   })
-        // }
-        
         calculateAndDisplayRoute(directionsService, directionsRenderer, waypoints_array);
       }
 
@@ -217,7 +209,6 @@
 
 
     function calculateAndDisplayRoute(directionsService, directionsRenderer, waypoints_array) {
-      console.log(waypoints_array)
       directionsService.route(
         {
           origin: { query: document.getElementById('pac-input-start').value },
