@@ -39,9 +39,9 @@ def edit_route(route_id):
     my_route = get_single_route(route_id)
     if request.method == "GET":
         parsed = parse_waypoints_into_array(my_route["waypoints"])
-        waypoints_json_string = json.dumps(parsed)
+        # waypoints_json_string = json.dumps(parsed)
         pprint(parsed)
-        return render_template("route.html", gm_api_key=GOOGLE_MAPS_API_KEY, my_route=my_route, waypoints_json_string=waypoints_json_string)
+        return render_template("route.html", gm_api_key=GOOGLE_MAPS_API_KEY, my_route=my_route, waypoints_json_string=parsed)
     elif request.method == "POST":
         form_data = request.form
         update_route(my_account, my_route["id"], form_data)

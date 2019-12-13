@@ -6,7 +6,7 @@ from controllers import account_blueprint, route_blueprint
 from models.account_model import Account  # only needed for db setup
 from models.route_model import Route      # only needed for db setup
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./static")
 
 app.config.from_object("config.Development")
 db.init_app(app)

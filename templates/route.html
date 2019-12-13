@@ -176,6 +176,7 @@
       directionsRenderer.setMap(map);
       
       var onChangeHandler = function () {
+        waypoints_array = [];
         calculateAndDisplayRoute(directionsService, directionsRenderer, waypoints_array);
       };
       directionsRenderer.addListener('directions_changed', function() {
@@ -189,18 +190,21 @@
       var end_location_length = document.getElementById('pac-input-end').value.length;
       
       if (start_location_length > 0 && end_location_length > 0) {
-        var waypoints_json_string = ({{waypoints_json_string}});
-        console.log('string to follow:', waypoints_json_string);
-        var waypoints_data = JSON.parse(waypoints_json_string);
-        
-        for (var i = 0; i < waypoints_data.length; i++) {
+        var waypoints_data = {{waypoints_json_string | safe }};
+        for (waypoint of waypoints_data) {
           waypoints_array.push({
-            location: new google.maps.LatLng(waypoints_data[i].lat, waypoints_data[i].lng),
+            location: new google.maps.LatLng(Number(waypoint.lat), Number(waypoint.lng)),
             stopover: false
-          })
-        }
+          });
+        };
+
+        // for (var i = 0; i < waypoints_data.length; i++) {
+        //   waypoints_array.push({
+        //     location: new google.maps.LatLng(waypoints_data[i].lat, waypoints_data[i].lng),
+        //     stopover: false
+        //   })
+        // }
         
-        console.log(waypoints_array)
         calculateAndDisplayRoute(directionsService, directionsRenderer, waypoints_array);
       }
 
@@ -219,7 +223,7 @@
           origin: { query: document.getElementById('pac-input-start').value },
           destination: { query: document.getElementById('pac-input-end').value },
           travelMode: 'DRIVING',
-          // waypoints: waypoints_array
+          waypoints: waypoints_array
         },
         function (response, status) {
           if (status === 'OK') {
