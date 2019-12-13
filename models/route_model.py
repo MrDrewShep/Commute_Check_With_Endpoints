@@ -74,7 +74,12 @@ class Route(db.Model):
         db.session.commit()
         return f'Route successfully added.'
 
-    # TODO def save/update
+    def update(self, form_data):
+        for k, v in form_data.items():
+            setattr(self, k, v)
+            print(k, v)
+        self.save()
+        return f'Changes successfully saved.'
     
     # TODO def delete
 

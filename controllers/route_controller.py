@@ -1,11 +1,12 @@
 from flask import Blueprint, request, Response, redirect, url_for, render_template
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from services.account_service import is_account
-from services.route_service import create_route, get_all_routes, toggle_route_active_status
+from services.route_service import create_route, get_all_routes, toggle_route_active_status, get_single_route, update_route
 from datetime import time, timedelta
 import json
 import os
 from services.route_service import parse_waypoints  # TODO delete once ready
+GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
 
 route_blueprint = Blueprint("route_api", __name__)
 
@@ -23,11 +24,23 @@ def home():
 def new_route():
     my_account = is_account(get_jwt_identity())
     if request.method == "GET":
-        GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
-        return render_template("new_route.html", gm_api_key=GOOGLE_MAPS_API_KEY)
+        return render_template("route.html", gm_api_key=GOOGLE_MAPS_API_KEY, my_route=False)
     elif request.method == "POST":
         form_data = request.form
         create_route(my_account, form_data)
+        return redirect(url_for("route_api.home"))
+
+# Edit route
+@route_blueprint.route('/edit/<int:route_id>', methods=["GET", "POST"])
+@jwt_required
+def edit_route(route_id):
+    my_account = is_account(get_jwt_identity())
+    my_route = get_single_route(route_id)
+    if request.method == "GET":
+        return render_template("route.html", gm_api_key=GOOGLE_MAPS_API_KEY, my_route=my_route)
+    elif request.method == "POST":
+        form_data = request.form
+        update_route(my_account, my_route["id"], form_data)
         return redirect(url_for("route_api.home"))
 
 # Toggle whether a route is active/inactive

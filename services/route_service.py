@@ -17,13 +17,6 @@ def parse_waypoints(google_response):
 
     waypoints = ""
 
-    # Appends the starting point to the waypoint string
-    # waypoints += "via:"
-    # waypoints += str(google_response["routes"][0]["legs"][0]["start_location"]["lat"])[:10]
-    # waypoints += "%2C"
-    # waypoints += str(google_response["routes"][0]["legs"][0]["start_location"]["lng"])[:10]
-    # waypoints += "%7C"
-
     # Google can only accept 23 lat/lng waypoints, beyond start/end locations
     # If more than 23 intermediate waypoints in the user's route, we need to
     # trim the waypoints that have the shortest distance (theoretically, the least routing impact)
@@ -47,16 +40,9 @@ def parse_waypoints(google_response):
                 waypoints += str(step["end_location"]["lat"])[:10] + "%2C" + str(step["end_location"]["lng"])[:10] + "%7C"
     waypoints = waypoints[:-3]
 
-    # Appends the ending points to the waypoint string
-    # waypoints += "via:"
-    # waypoints += str(google_response["routes"][0]["legs"][0]["end_location"]["lat"])[:10]
-    # waypoints += "%2C"
-    # waypoints += str(google_response["routes"][0]["legs"][0]["end_location"]["lng"])[:10]
-    print(len(waypoints))
-    print(waypoints)
     return waypoints
 
-def create_route(my_account, form_data):
+def compile_route_data(my_account, form_data):
     google_response = json.loads(form_data["google_response"])
     
     route_data = {}
@@ -69,7 +55,7 @@ def create_route(my_account, form_data):
     route_data["end_location_type"] = form_data["end_location_type"]
     route_data["waypoints"] = parse_waypoints(google_response)
     run_hour = int(form_data["local_run_time"][:2])
-    run_minute = int(form_data["local_run_time"][3:])
+    run_minute = int(form_data["local_run_time"][3:5])
     run_timezone_offset = int(form_data["local_timezone_offset"])
     route_data["local_run_time"] = time(run_hour, run_minute)
     route_data["local_timezone_offset"] = run_timezone_offset
@@ -83,9 +69,20 @@ def create_route(my_account, form_data):
     route_data["run_friday"] = True if form_data.get("Friday") else False
     route_data["run_saturday"] = True if form_data.get("Saturday") else False
 
+    return route_data
+
+def create_route(my_account, form_data):
+    route_data = compile_route_data(my_account, form_data)
     new_route = Route(route_data)
     new_route.save()
     return "successssssss"
+
+def update_route(my_account, route_id, form_data):
+    route = Route.get_route(route_id)
+    route_data = compile_route_data(my_account, form_data)
+    if str(my_account.phone) == str(route.phone):
+        route.update(route_data)
+    return f'Successful'
     
 def get_single_route(route_id):
     route = Route.get_route(route_id)
