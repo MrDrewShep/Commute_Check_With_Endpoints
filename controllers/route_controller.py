@@ -1,9 +1,10 @@
 from flask import Blueprint, request, Response, redirect, url_for, render_template
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from services.account_service import is_account
-from services.route_service import create_route, get_all_routes, toggle_route_active_status, get_single_route, update_route
+from services.route_service import create_route, get_all_routes, toggle_route_active_status, get_single_route, update_route, parse_waypoints_into_array
 from datetime import time, timedelta
 import json
+from pprint import pprint
 import os
 from services.route_service import parse_waypoints  # TODO delete once ready
 GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
@@ -37,7 +38,10 @@ def edit_route(route_id):
     my_account = is_account(get_jwt_identity())
     my_route = get_single_route(route_id)
     if request.method == "GET":
-        return render_template("route.html", gm_api_key=GOOGLE_MAPS_API_KEY, my_route=my_route)
+        parsed = parse_waypoints_into_array(my_route["waypoints"])
+        waypoints_json_string = json.dumps(parsed)
+        pprint(parsed)
+        return render_template("route.html", gm_api_key=GOOGLE_MAPS_API_KEY, my_route=my_route, waypoints_json_string=waypoints_json_string)
     elif request.method == "POST":
         form_data = request.form
         update_route(my_account, my_route["id"], form_data)

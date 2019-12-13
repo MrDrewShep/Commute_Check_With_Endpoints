@@ -141,19 +141,18 @@
     
     var preferred_route;
     var autocomplete;
-    var waypoints_array = [];
-    
+
     function initAutocomplete() {
       // Create the autocomplete object, restricting the search predictions to
       // geographical location types.
       autocomplete_start = new google.maps.places.Autocomplete(
         document.getElementById('pac-input-start'), { types: ['geocode'] });
-        autocomplete_end = new google.maps.places.Autocomplete(
-          document.getElementById('pac-input-end'), { types: ['geocode'] });
-          
-          // Avoid paying for data that you don't need by restricting the set of
-          // place fields that are returned to just the address components.
-          autocomplete_start.setFields(['address_component']);
+      autocomplete_end = new google.maps.places.Autocomplete(
+        document.getElementById('pac-input-end'), { types: ['geocode'] });
+
+      // Avoid paying for data that you don't need by restricting the set of
+      // place fields that are returned to just the address components.
+      autocomplete_start.setFields(['address_component']);
       autocomplete_end.setFields(['address_component']);
 
       // When the user selects an address from the drop-down, populate the
@@ -176,35 +175,27 @@
       directionsRenderer.setMap(map);
       
       var onChangeHandler = function () {
-        calculateAndDisplayRoute(directionsService, directionsRenderer, waypoints_array);
+        calculateAndDisplayRoute(directionsService, directionsRenderer);
       };
       directionsRenderer.addListener('directions_changed', function() {
         onDrag(directionsRenderer.getDirections());
       });
       document.getElementById('pac-input-start').addEventListener('change', onChangeHandler);
       document.getElementById('pac-input-end').addEventListener('change', onChangeHandler);
-      
-      
+    }
+    
+          
+    function initPrefilledRoute() {
       var start_location_length = document.getElementById('pac-input-start').value.length;
       var end_location_length = document.getElementById('pac-input-end').value.length;
-      
+      {% if my_route %}
+      var waypoints = "{{my_route.waypoints}}"
+      {% endif %}
       if (start_location_length > 0 && end_location_length > 0) {
-        var waypoints_json_string = ({{waypoints_json_string}});
-        console.log('string to follow:', waypoints_json_string);
-        var waypoints_data = JSON.parse(waypoints_json_string);
-        
-        for (var i = 0; i < waypoints_data.length; i++) {
-          waypoints_array.push({
-            location: new google.maps.LatLng(waypoints_data[i].lat, waypoints_data[i].lng),
-            stopover: false
-          })
-        }
-        
-        console.log(waypoints_array)
-        calculateAndDisplayRoute(directionsService, directionsRenderer, waypoints_array);
+        console.log('ADJUST JS HERE');
+        console.log(waypoints);
       }
-
-    }
+    };
     
     
     var onDrag = function (my_directions) {
@@ -212,14 +203,12 @@
     };
 
 
-    function calculateAndDisplayRoute(directionsService, directionsRenderer, waypoints_array) {
-      console.log(waypoints_array)
+    function calculateAndDisplayRoute(directionsService, directionsRenderer) {
       directionsService.route(
         {
           origin: { query: document.getElementById('pac-input-start').value },
           destination: { query: document.getElementById('pac-input-end').value },
-          travelMode: 'DRIVING',
-          // waypoints: waypoints_array
+          travelMode: 'DRIVING'
         },
         function (response, status) {
           if (status === 'OK') {
@@ -245,6 +234,7 @@
     function initialize() {
       initMap();
       initAutocomplete();
+      initPrefilledRoute();
     };
 
   </script>

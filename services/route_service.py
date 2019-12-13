@@ -42,6 +42,20 @@ def parse_waypoints(google_response):
 
     return waypoints
 
+def parse_waypoints_into_array(waypoints):
+    waypoints_array = []
+
+    for item in waypoints.split('%7C'):
+        item = item[4:]
+        latlng = item.split('%2C')
+        waypoints_array.append(
+            {
+                "lat": latlng[0],
+                "lng": latlng[1]
+            }
+        )
+    return waypoints_array
+
 def compile_route_data(my_account, form_data):
     google_response = json.loads(form_data["google_response"])
     
