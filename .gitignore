@@ -4,6 +4,7 @@
 /migrations/
 misc_code/
 __pycache__
+/migrations/
 
 beta_app.py
 before_running_the_app.txt
