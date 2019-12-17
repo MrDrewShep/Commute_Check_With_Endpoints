@@ -3,7 +3,8 @@ Just head home, and know that your defined "usual" route home is the fastest... 
 
 You'll receive an SMS alert if the system detects an "alternate" route meets your defined threshold for time savings.
 
-## 1 of 2 programs that run together, to provide exception based navigation notifications for a user's commute to/from work. In this part of the service, a user registers, saving their commute data (includes a GUI with help from Google Maps APIs). The second part of the service is a job scheduler, that run analysis on user routes at the user's predefined times of day.
+### Part 1 of 2
+This repo represents 1 of 2 programs that run together, to provide exception based navigation notifications for a user's commute to/from work. In this part of the service, a user registers, saving their commute data (includes a GUI with help from Google Maps APIs). The second part of the service is a job scheduler, that run analysis on user routes at the user's predefined times of day.
 
 ### Why I Built This
 I know how to get to and from work. So I don't turn on my navigation. It would be extra work.
