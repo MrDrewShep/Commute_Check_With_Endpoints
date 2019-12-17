@@ -2,14 +2,14 @@ from datetime import datetime, timedelta
 import time
 import sys
 import os
-SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+DATABASE_URL = os.getenv('DATABASE_URL')
 from apscheduler.schedulers.background import BackgroundScheduler
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, Time
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import commute_check
 
-engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=False)
+engine = create_engine(DATABASE_URL, echo=False)
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
@@ -53,7 +53,6 @@ def scan_for_jobs():
 
 
 def alarm(route):
-
     if True:
         commute_check.run_route(route)
         print(f'Route id {route.id} from {route.start_location} to {route.end_location} at {route.run_time}')
