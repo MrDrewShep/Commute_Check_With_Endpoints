@@ -11,4 +11,4 @@ I know how to get to and from work. So I don't turn on my navigation. It would b
 
 But every so often my "usual" route has an unexpected accident, or traffic jam. I thought to myself, "I wish I didn't have to run navigation every day just to avoid the rare traffic jam."
 
-And the idea was born. A system that houses my "usual" route home. Each day at 5pm (currently requires manual file running) it checks the "usual" route's estimated time against the "best available" route, only generating an SMS notification if the time savings surpasses my defined threshold. I don't run navigation... unless I get a message.
+And the idea was born. A system that houses my "usual" route home. Each day at my predefined time, it checks the "usual" route's estimated time against the "best available" route, only generating an SMS notification if the time savings surpasses my defined threshold. I don't run navigation... unless I get a message.
