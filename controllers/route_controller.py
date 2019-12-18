@@ -15,6 +15,7 @@ route_blueprint = Blueprint("route_api", __name__)
 @route_blueprint.route('/home', methods=["GET"])
 @jwt_required
 def home():
+    print('YOU FOUND ME')
     my_account = is_account(get_jwt_identity())
     my_routes = get_all_routes(my_account.phone)
     return render_template("account_home.html", my_account=my_account, my_routes=my_routes)

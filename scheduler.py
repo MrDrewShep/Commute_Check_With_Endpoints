@@ -45,29 +45,42 @@ def scan_for_jobs():
             active_routes.append(instance)
     
     jobs_added_to_queue = 0
+    jobs_reviewed = 0
+    now = datetime.utcnow()
+    horizon = now + timedelta(minutes=600)
     for route in active_routes:
-        run_date = datetime.now() + timedelta(seconds=4)
-        scheduler.add_job(alarm, 'date', run_date=run_date, args=[route])
-        jobs_added_to_queue += 1
-    return jobs_added_to_queue
+        jobs_reviewed += 1
+        # TODO if we have already passed the run time, then run time is the next run time
+        # TODO Check if job already exists in job scheduler queue
+        # TODO Check if day of week is correct
+        run_date = datetime(2019, 12, 17, route.run_time.hour, route.run_time.minute, route.run_time.second)
+        if now < run_date and run_date < horizon:
+            run_date2 = datetime.now() + timedelta(seconds=2)
+            scheduler.add_job(alarm, 'date', run_date=run_date, args=[route])
+            jobs_added_to_queue += 1
+            # print(f'Added {route.id} Run date {run_date} Horizon {horizon}')
+        else:
+            # print(f'Not added {route.id} Run date {run_date} Horizon {horizon}')
+            pass
+    return jobs_reviewed, jobs_added_to_queue
 
 
 def alarm(route):
     if True:
-        commute_check.run_route(route)
-        print(f'Route id {route.id} from {route.start_location} to {route.end_location} at {route.run_time}')
+        print(commute_check.run_route(route))
 
 
 if __name__ == '__main__':
     scheduler = BackgroundScheduler()
     scheduler.start()
-    print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
+    print('Press Ctrl+{0} to exit\n'.format('Break' if os.name == 'nt' else 'C'))
 
     try:
         while True:
-            jobs_added_to_queue = scan_for_jobs()
+            # scheduler.print_jobs()
+            jobs_reviewed, jobs_added_to_queue = scan_for_jobs()
             now = datetime.utcnow()
-            print(f'Added {jobs_added_to_queue} jobs to the queue. ({now})')
-            time.sleep(30)
+            print(f'Added {jobs_added_to_queue} jobs to the queue, reviewed {jobs_reviewed} total. ({now})')
+            time.sleep(10)
     except (KeyboardInterrupt, SystemExit):
         scheduler.shutdown()    

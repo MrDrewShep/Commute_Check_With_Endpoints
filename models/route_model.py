@@ -77,7 +77,6 @@ class Route(db.Model):
     def update(self, form_data):
         for k, v in form_data.items():
             setattr(self, k, v)
-            print(k, v)
         self.save()
         return f'Changes successfully saved.'
     

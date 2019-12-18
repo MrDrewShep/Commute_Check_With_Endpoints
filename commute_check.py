@@ -28,6 +28,7 @@ def unpack_route_from_db(route):
     # waypoints = "via:34.160454%2C-118.467785"
     
     my_route = {
+        "id": route.id,
         "start_location": route.start_location,
         "end_location": route.end_location,
         "delay_tolerance": int(route.delay_tolerance),
@@ -117,12 +118,12 @@ def make_api_calls(my_route):
 def parse_api_responses(my_route):
     """Take each Google API JSON response and parse the response for data."""
 
-    print(my_route["phone"])
+    # print(my_route["phone"])
     for request in my_route["api_requests"]:
         total_distance = 0
         sum_duration = 0
         sum_duration_w_traffic = 0
-        print(f'Route: {request["request_type"]}, {request["api_response"]["routes"][0]["summary"]}')
+        # print(f'Route: {request["request_type"]}, {request["api_response"]["routes"][0]["summary"]}')
         i = 1
         legnum = 1
         rte_index = 0
@@ -144,7 +145,7 @@ def parse_api_responses(my_route):
         request["duration_str"] = duration
         request["duration_w_traffic"] = sum_duration_w_traffic
         request["duration_w_traffic_str"] = duration_w_traffic
-        print(f"Total: {round(total_distance/1607, 1)} mi, {duration}, {duration_w_traffic} with traffic")
+        # print(f"Total: {round(total_distance/1607, 1)} mi, {duration}, {duration_w_traffic} with traffic")
     
     return my_route
 
@@ -181,11 +182,11 @@ def evaluate_optimal_route(my_route):
     delta = preferred_duration_w_traffic - best_avail_duration_w_traffic
 
     if delta > tolerance_seconds:
-        suggest_alt_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone)
+        text_message = suggest_alt_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone)
     else:
-        suggest_preferred_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone, tolerance_seconds)
+        text_message = suggest_preferred_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone, tolerance_seconds)
 
-    return my_route
+    return my_route, text_message
 
 
 def suggest_alt_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone):
@@ -196,8 +197,9 @@ def suggest_alt_route(preferred_duration_w_traffic, best_avail_duration_w_traffi
     delta = convert_secs_to_hr_min_string(delta)
 
     text_body = f'Save {delta}, your usual route is {preferred} and a {best} alternative exists.'
-    print(text_body)
+    # print(text_body)
     send_sms.send_sms(phone, text_body)
+    return text_body
 
 
 def suggest_preferred_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone, tolerance_seconds):
@@ -209,8 +211,9 @@ def suggest_preferred_route(preferred_duration_w_traffic, best_avail_duration_w_
     tolerance = convert_secs_to_hr_min_string(tolerance_seconds)
 
     text_body = f'Stick to your usual route, at {preferred}. The best route available is {best}. Your threshold for an alternative is {tolerance}.'
-    print(text_body)
+    # print(text_body)
     send_sms.send_sms(phone, text_body)
+    return text_body
 
 
 def run_route(route):
@@ -218,6 +221,5 @@ def run_route(route):
     my_route = setup_api_requests_data(my_route)
     my_route = make_api_calls(my_route)
     my_route = parse_api_responses(my_route)
-    my_route = evaluate_optimal_route(my_route)
-
-# run_route(route)
+    my_route, text_message = evaluate_optimal_route(my_route)
+    return f'To: {my_route["phone"]}\nRoute ID: {my_route["id"]}\nMessage: {text_message}'

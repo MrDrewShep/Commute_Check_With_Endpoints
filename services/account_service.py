@@ -52,11 +52,11 @@ def validate_authentication(attempt):
     message = "Login failed."
     token = "No token provided."
 
-    my_account = is_account("3175142678")       # TODO make this modular
+    my_account = is_account(attempt["phone"])
 
     if my_account:
         if datetime.utcnow() < my_account.otp_expiration:
-            if bcrypt.check_password_hash(my_account.otp, attempt):
+            if bcrypt.check_password_hash(my_account.otp, attempt["verification_code"]):
                 token = create_access_token(identity=my_account.phone)
                 message = "Successfully authenticated."
             else:

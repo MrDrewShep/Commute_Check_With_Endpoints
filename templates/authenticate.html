@@ -54,12 +54,15 @@
       <fieldset>
         <legend>Enter the verification code sent to your phone:</legend>
         <p>
-          <label for="">Verification code:</label>
+          <label for="">Verification code: </label>
           <input type="test" name="verification_code">
         </p>
         <p>
           <label for=""></label>
           <input type="submit" value="Sign In">
+        </p>
+        <p>
+          <input type="hidden" id="phone_number" value="{{phone}}" name="phone">
         </p>
       </fieldset>
     </form>
