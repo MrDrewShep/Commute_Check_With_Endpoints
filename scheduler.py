@@ -95,7 +95,7 @@ def scan_for_jobs():
         if next_local_run_datetime < local_horizon:
             # Add job to queue, in UTC datetime
             # next_local_run_datetime2 = datetime.now() + timedelta(seconds=30)
-            my_job = scheduler.add_job(alarm, 'date', run_date=next_local_run_datetime, args=[route], id=str(route.id))
+            my_job = scheduler.add_job(alarm, 'date', run_date=next_utc_run_datetime, args=[route], id=str(route.id))
             routes_added_to_scheduler += 1
             print(f'Added Route: {route.id} Run date UTC: {next_utc_run_datetime}')
 
