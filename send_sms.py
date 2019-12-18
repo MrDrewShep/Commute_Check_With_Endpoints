@@ -1,6 +1,5 @@
 import boto3
 
-
 def send_sms(phone, text_body):
     sns = boto3.client('sns')
     response = sns.publish(
@@ -15,3 +14,7 @@ def send_sms(phone, text_body):
     )
 
     print("\n", response)
+
+
+# send_sms("+13175142678", "hello drew")
+
