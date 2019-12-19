@@ -90,23 +90,23 @@ def scan_for_jobs():
 
         # Check if the next run time is within the horizon for adding to the job scheduler
         local_horizon = local_now + timedelta(minutes=35)
-        utc_horizon = local_horizon - timedelta(hours=route.local_timezone_offset)
         next_utc_run_datetime = next_local_run_datetime - timedelta(hours=route.local_timezone_offset)
-        if next_local_run_datetime < local_horizon:
+        if local_now < next_local_run_datetime and next_local_run_datetime < local_horizon:
             # Add job to queue, in UTC datetime
-            # next_local_run_datetime2 = datetime.now() + timedelta(seconds=30)
-            my_job = scheduler.add_job(alarm, 'date', run_date=next_utc_run_datetime, args=[route], id=str(route.id))
+            # next_local_run_datetime2 = datetime.now() + timedelta(seconds=30)  # Line for testing only
+            new_job = scheduler.add_job(alarm, 'date', run_date=next_utc_run_datetime, args=[route], id=str(route.id))
             routes_added_to_scheduler += 1
             print(f'Added Route: {route.id} Run date UTC: {next_utc_run_datetime}')
 
     print('CURRENTLY SCHEDULED JOBS')
-    print(scheduler.get_jobs())
+    print([f'Route:{job.id} at {job.next_run_time}' for job in scheduler.get_jobs()])
     return routes_reviewed, routes_added_to_scheduler
 
 
 def alarm(route):
     if True:
-        print(commute_check.run_route(route))
+        response = commute_check.run_route(route)
+        print('\n', response)
 
 
 if __name__ == '__main__':

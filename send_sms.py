@@ -13,7 +13,8 @@ def send_sms(phone, text_body):
         },
     )
 
-    print("\n", response)
+    # print("\n", response)
+    return response
 
 
 # send_sms("+13175142678", "hello drew")

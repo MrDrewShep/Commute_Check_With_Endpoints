@@ -13,7 +13,7 @@ class Route(db.Model):
     end_location = db.Column(db.String(100), nullable=False)
     end_location_type = db.Column(db.String(20), nullable=False)
     waypoints = db.Column(db.String(800))
-    run_time = db.Column(db.Time, nullable=False)
+    run_time = db.Column(db.Time, nullable=True)
     local_run_time = db.Column(db.Time, nullable=False)
     local_timezone_offset = db.Column(db.Integer, nullable=False)
     delay_tolerance = db.Column(db.Integer, nullable=False)

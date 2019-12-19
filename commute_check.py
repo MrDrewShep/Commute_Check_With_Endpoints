@@ -182,11 +182,11 @@ def evaluate_optimal_route(my_route):
     delta = preferred_duration_w_traffic - best_avail_duration_w_traffic
 
     if delta > tolerance_seconds:
-        text_message = suggest_alt_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone)
+        text_message, sns_api_response = suggest_alt_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone)
     else:
-        text_message = suggest_preferred_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone, tolerance_seconds)
+        text_message, sns_api_response = suggest_preferred_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone, tolerance_seconds)
 
-    return my_route, text_message
+    return my_route, text_message, sns_api_response
 
 
 def suggest_alt_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone):
@@ -197,9 +197,8 @@ def suggest_alt_route(preferred_duration_w_traffic, best_avail_duration_w_traffi
     delta = convert_secs_to_hr_min_string(delta)
 
     text_body = f'Save {delta}, your usual route is {preferred} and a {best} alternative exists.'
-    # print(text_body)
-    send_sms.send_sms(phone, text_body)
-    return text_body
+    sns_api_response = send_sms.send_sms(phone, text_body)
+    return text_body, sns_api_response
 
 
 def suggest_preferred_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone, tolerance_seconds):
@@ -211,9 +210,8 @@ def suggest_preferred_route(preferred_duration_w_traffic, best_avail_duration_w_
     tolerance = convert_secs_to_hr_min_string(tolerance_seconds)
 
     text_body = f'Stick to your usual route, at {preferred}. The best route available is {best}. Your threshold for an alternative is {tolerance}.'
-    # print(text_body)
-    send_sms.send_sms(phone, text_body)
-    return text_body
+    sns_api_response = send_sms.send_sms(phone, text_body)
+    return text_body, sns_api_response
 
 
 def run_route(route):
@@ -221,5 +219,5 @@ def run_route(route):
     my_route = setup_api_requests_data(my_route)
     my_route = make_api_calls(my_route)
     my_route = parse_api_responses(my_route)
-    my_route, text_message = evaluate_optimal_route(my_route)
-    return f'To: {my_route["phone"]}\nRoute ID: {my_route["id"]}\nMessage: {text_message}'
+    my_route, text_message, sns_api_response = evaluate_optimal_route(my_route)
+    return f'To: {my_route["phone"]}\nRoute ID: {my_route["id"]}\nMessage: {text_message}\n{sns_api_response}'
