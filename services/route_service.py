@@ -73,6 +73,7 @@ def compile_route_data(my_account, form_data):
     run_timezone_offset = int(form_data["local_timezone_offset"])
     route_data["local_run_time"] = time(run_hour, run_minute)
     route_data["local_timezone_offset"] = run_timezone_offset
+    route_data["run_time"] = route_data["local_run_time"]
     route_data["delay_tolerance"] = form_data["delay_tolerance"]
     route_data["run_sunday"] = True if form_data.get("Sunday") else False
     route_data["run_monday"] = True if form_data.get("Monday") else False
