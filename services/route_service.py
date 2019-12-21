@@ -104,7 +104,6 @@ def get_single_route(route_id):
     return route_dump
 
 def get_all_routes(phone):
-    print('HELLO WORLD')
     routes = Route.get_all_routes(phone)
     route_dump = route_schema.dump(routes, many=True)
     return route_dump

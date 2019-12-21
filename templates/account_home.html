@@ -38,7 +38,7 @@
             <td><a href="/route/edit/{{i.id}}">Edit</a></td>
             <td>{{i.start_location}}</td>
             <td>{{i.end_location}}</td>
-            <td>{{i.local_run_time}}</td>
+            <td>{{i.local_run_time}} {{i.tz_desc}}</td>
             <td>{{i.delay_tolerance}}</td>
             <td>
                 {% if i.run_sunday %}S{% endif %}
