@@ -18,15 +18,15 @@ def home():
     my_account = is_account(get_jwt_identity())
     my_routes = get_all_routes(my_account.phone)
     for route in my_routes:
+        route["local_run_time"] = str(route["local_run_time"][:5])
         if route["local_timezone_offset"] == -5:
-            route["tz_desc"] = "EST"
+            route["tz_desc"] = "(EST)"
         elif route["local_timezone_offset"] == -6:
-            route["tz_desc"] = "CST"
+            route["tz_desc"] = "(CST)"
         elif route["local_timezone_offset"] == -7:
-            route["tz_desc"] = "MST"
+            route["tz_desc"] = "(MST)"
         elif route["local_timezone_offset"] == -8:
-            route["tz_desc"] = "PST"
-    print(route["tz_desc"])
+            route["tz_desc"] = "(PST)"
     return render_template("account_home.html", my_account=my_account, my_routes=my_routes)
 
 # Build new route

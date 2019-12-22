@@ -1,10 +1,42 @@
 
 a {
-    color: green;
+    color: blue;
 }
 
 body {
 }
 
 table {
+    border: 0px;
+    /* border-collapse: collapse; */
+}
+
+th {
+    background-color: black;
+    color: white;
+}
+
+tr:nth-child(odd) {
+    background-color: #CCC;
+}
+
+td.on_off {
+    text-align: center;
+}
+
+td.weekday {
+    width: 15px;
+    text-align: center;
+}
+
+td.run_time {
+    text-align: right;
+}
+
+td.tz_desc {
+    text-align: center;
+}
+
+td.delay_tolerance {
+    text-align: center;
 }

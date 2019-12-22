@@ -98,6 +98,7 @@ def scan_for_jobs():
             routes_added_to_scheduler += 1
             print(f'Added Route: {route.id} Run date UTC: {next_utc_run_datetime}')
 
+    my_session.close()
     print('CURRENTLY SCHEDULED JOBS')
     print([f'Route:{job.id} at {job.next_run_time}' for job in scheduler.get_jobs()])
     return routes_reviewed, routes_added_to_scheduler

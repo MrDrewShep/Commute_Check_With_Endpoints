@@ -16,51 +16,50 @@
 
     <br><br>
 
-    <table border="1">
+    <table>
         <tr>
-            <td colspan="2">Route Status</td>
-            <td></td>
-            <td>Start Location</td>
-            <td>End Location</td>
-            <td>Local Run Time</td>
-            <td>Delay Tolerance</td>
-            <td colspan="7">Days to Run</td>
+            <th>On/Off</th>
+            <th></th>
+            <th>Start Location</th>
+            <th>End Location</th>
+            <th colspan="2">Local Run Time</th>
+            <th>Delay Tolerance</th>
+            <th colspan="7">Days to Run</th>
         </tr>
         {% for i in my_routes %}
         <tr>
             {% if i.active %}
-            <td><b>Active</b></td>
-            <td>(<a href="toggle_active_status/{{i.id}}">Turn Off</a>)</td>
+            <td class="on_off"><a href="toggle_active_status/{{i.id}}"><img height="25px" src="{{ url_for('static', filename='on_button.png') }}" alt=""></a></td>
             {% else %}
-            <td><b>Inactive</b></td>
-            <td>(<a href="toggle_active_status/{{i.id}}">Turn On</a>)</td>
+            <td class="on_off"><a href="toggle_active_status/{{i.id}}"><img height="25px" src="{{ url_for('static', filename='off_button.png') }}" alt=""></a></td>
             {% endif %}
-            <td><a href="/route/edit/{{i.id}}">Edit</a></td>
-            <td>{{i.start_location}}</td>
-            <td>{{i.end_location}}</td>
-            <td>{{i.local_run_time}} {{i.tz_desc}}</td>
-            <td>{{i.delay_tolerance}}</td>
-            <td>
+            <td class="edit"><a href="/route/edit/{{i.id}}">Edit</a></td>
+            <td class="location">{{i.start_location}}</td>
+            <td class="location">{{i.end_location}}</td>
+            <td class="run_time">{{i.local_run_time}}</td>
+            <td class="tz_desc">{{i.tz_desc}}</td>
+            <td class="delay_tolerance">{{i.delay_tolerance}}</td>
+            <td class="weekday">
                 {% if i.run_sunday %}S{% endif %}
             </td>
-            <td>
+            <td class="weekday">
                 {% if i.run_monday %}M{% endif %}
-            </td>
-            <td>
+            </td class="weekday">
+            <td class="weekday">
                 {% if i.run_tuesday %}T{% endif %}
-            </td>
-            <td>
+            </td class="weekday">
+            <td class="weekday">
                 {% if i.run_wednesday %}W{% endif %}
-            </td>
-            <td>
+            </td class="weekday">
+            <td class="weekday">
                 {% if i.run_thursday %}T{% endif %}
-            </td>
-            <td>
+            </td class="weekday">
+            <td class="weekday">
                 {% if i.run_friday %}F{% endif %}
-            </td>
-            <td>
+            </td class="weekday">
+            <td class="weekday">
                 {% if i.run_saturday %}S{% endif %}
-            </td>
+            </td class="weekday">
         </tr>
         {% endfor %}
     </table>
