@@ -1,97 +1,66 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Simple Map</title>
-  <meta name="viewport" content="initial-scale=1.0">
-  <meta charset="utf-8">
-  <style>
-
-    #myform {
-      margin-top: 100px;
-      margin-left: 100px;
-    }
-
-    form {
-      display: table;
-    }
-
-    form p {
-      display: table-row;
-    }
-
-    form label {
-      display: table-cell;
-      padding-right: 10px;
-      text-align: right;
-    }
-
-    form input {
-      display: table-cell;
-    }
-
-    .texttip {
-      color: grey;
-      font-style: italic;
-    }
-
-    .controls {
-      width: 300px;
-    }
-
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="myform">
-    <form id="signin_form" method="post" action="/account/login">
-      <fieldset>
-        <legend>Sign in:</legend>
-        <p>
-          <label for="">Phone:</label>
-          <input type="tel" name="phone"><font class="texttip"> 123 456 7890</font>
-        </p>
-        <p>
-          <label for=""></label>
-          <input type="submit" value="Sign In">
-        </p>
-      </fieldset>
-    </form>
-    <br>
-    <br>
-  </div>
-  
-  <div class="myform">
-    <form id="registration_form" method="post" action="/account/register">
-      <fieldset>
-        <legend>Register a new account:</legend>
-        <p>
-          <label for="">First name:</label>
-          <input type="text" name="fname" id="fname">
-        </p>
-        <p>
-          <label for="">Last name:</label>
-          <input type="text" name="lname">
-        </p>
-        <p>
-          <label for="">Phone:</label>
-          <input type="tel" name="phone"><font class="texttip"> 123 456 7890</font>
-        </p>
-        <p>
-          <label for=""></label>
-          <input type="submit" value="Register">
-        </p>
-      </fieldset>
-    </form>
-    <br>
-    <br>
-  </div>
-</body>
-
-</html>
+{% extends "layout.html" %}
+{% block body %}
+  <head>
+    <title>Commute Check</title>
+  </head>
+      <div class="description_wrapper">
+        <div class="description_content">
+         <h2>Exception Based Alerting</h2>
+         <p>You tell us your preferred route home, and your threshold for time savings before we notify you of a faster alternative.</p>
+         <p>Then just head home knowing your preferred route is optimal... unless you hear from us.</p>
+        </div class="description_content">
+      </div class="description_wrapper">
+      
+      <div class="form_and_image_wrapper">
+        
+        <div class="two_forms">
+          <div class="myform">
+            <form id="signin_form" method="post" action="/account/login">
+              <fieldset>
+                <legend>Returning user sign in:</legend>
+                <p>
+                  <label for="">Phone:</label>
+                  <input type="tel" name="phone"><font class="texttip"> 123 456 7890</font>
+                </p>
+                <p>
+                  <label for=""></label>
+                  <input type="submit" value="Sign In">
+                </p>
+              </fieldset> 
+            </form>
+            <br>
+            <br>
+          </div class="myform">
+          <div class="myform">
+            <form id="registration_form" method="post" action="/account/register">
+              <fieldset>
+                <legend>Register for the first time:</legend>
+                <p>
+                  <label for="">First name:</label>
+                  <input type="text" name="fname" id="fname">
+                </p>
+                <p>
+                  <label for="">Last name:</label>
+                  <input type="text" name="lname">
+                </p>
+                <p>
+                  <label for="">Phone:</label>
+                  <input type="tel" name="phone"><font class="texttip"> 123 456 7890</font>
+                </p>
+                <p>
+                  <label for=""></label>
+                  <input type="submit" value="Register">
+                </p>
+              </fieldset>
+            </form>
+            <br>
+            <br>
+          </div class="myform">
+        </div class="two_forms">
+        
+        <div class="screenshot">
+          <img src="{{ url_for('static', filename='commute_check_framed_jetblack_cropped.png') }}" width="350" alt="">
+        </div class="screenshot">
+      </div class="form_and_image_wrapper">
+    
+{% endblock %}

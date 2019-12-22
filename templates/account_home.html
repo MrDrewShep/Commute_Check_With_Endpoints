@@ -1,72 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Commute Check</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+{% extends "layout.html" %}
+{% block body %}
+  <head>
+    <title>Commute Check Routes Homepage</title>
+  </head>
+ 
 
-    Phone: {{my_account.phone}} <br>
-    Name: {{my_account.fname}} {{my_account.lname}} <br>
+      Phone: {{my_account.phone}} <br>
+      Name: {{my_account.fname}} {{my_account.lname}} <br>
+  
+      <br><a href="/route/new">Add a Route</a>
+  
+      <br><br>
+  
+      <table>
+          <tr>
+              <th>On/Off</th>
+              <th></th>
+              <th>Start Location</th>
+              <th>End Location</th>
+              <th colspan="2">Local Run Time</th>
+              <th>Delay Tolerance</th>
+              <th colspan="7">Days to Run</th>
+          </tr>
+          {% for i in my_routes %}
+          <tr>
+              {% if i.active %}
+              <td class="on_off"><a href="toggle_active_status/{{i.id}}"><img height="25px" src="{{ url_for('static', filename='on_button.png') }}" alt=""></a></td>
+              {% else %}
+              <td class="on_off"><a href="toggle_active_status/{{i.id}}"><img height="25px" src="{{ url_for('static', filename='off_button.png') }}" alt=""></a></td>
+              {% endif %}
+              <td class="edit"><a href="/route/edit/{{i.id}}">Edit</a></td>
+              <td class="location">{{i.start_location}}</td>
+              <td class="location">{{i.end_location}}</td>
+              <td class="run_time">{{i.local_run_time}}</td>
+              <td class="tz_desc">{{i.tz_desc}}</td>
+              <td class="delay_tolerance">{{i.delay_tolerance}}</td>
+              <td class="weekday">
+                  {% if i.run_sunday %}S{% endif %}
+              </td>
+              <td class="weekday">
+                  {% if i.run_monday %}M{% endif %}
+              </td class="weekday">
+              <td class="weekday">
+                  {% if i.run_tuesday %}T{% endif %}
+              </td class="weekday">
+              <td class="weekday">
+                  {% if i.run_wednesday %}W{% endif %}
+              </td class="weekday">
+              <td class="weekday">
+                  {% if i.run_thursday %}T{% endif %}
+              </td class="weekday">
+              <td class="weekday">
+                  {% if i.run_friday %}F{% endif %}
+              </td class="weekday">
+              <td class="weekday">
+                  {% if i.run_saturday %}S{% endif %}
+              </td class="weekday">
+          </tr>
+          {% endfor %}
+      </table>
 
-    <br><a href="/route/new">Add a Route</a>
+    
+{% endblock %}
 
-    <br><br>
-
-    <table>
-        <tr>
-            <th>On/Off</th>
-            <th></th>
-            <th>Start Location</th>
-            <th>End Location</th>
-            <th colspan="2">Local Run Time</th>
-            <th>Delay Tolerance</th>
-            <th colspan="7">Days to Run</th>
-        </tr>
-        {% for i in my_routes %}
-        <tr>
-            {% if i.active %}
-            <td class="on_off"><a href="toggle_active_status/{{i.id}}"><img height="25px" src="{{ url_for('static', filename='on_button.png') }}" alt=""></a></td>
-            {% else %}
-            <td class="on_off"><a href="toggle_active_status/{{i.id}}"><img height="25px" src="{{ url_for('static', filename='off_button.png') }}" alt=""></a></td>
-            {% endif %}
-            <td class="edit"><a href="/route/edit/{{i.id}}">Edit</a></td>
-            <td class="location">{{i.start_location}}</td>
-            <td class="location">{{i.end_location}}</td>
-            <td class="run_time">{{i.local_run_time}}</td>
-            <td class="tz_desc">{{i.tz_desc}}</td>
-            <td class="delay_tolerance">{{i.delay_tolerance}}</td>
-            <td class="weekday">
-                {% if i.run_sunday %}S{% endif %}
-            </td>
-            <td class="weekday">
-                {% if i.run_monday %}M{% endif %}
-            </td class="weekday">
-            <td class="weekday">
-                {% if i.run_tuesday %}T{% endif %}
-            </td class="weekday">
-            <td class="weekday">
-                {% if i.run_wednesday %}W{% endif %}
-            </td class="weekday">
-            <td class="weekday">
-                {% if i.run_thursday %}T{% endif %}
-            </td class="weekday">
-            <td class="weekday">
-                {% if i.run_friday %}F{% endif %}
-            </td class="weekday">
-            <td class="weekday">
-                {% if i.run_saturday %}S{% endif %}
-            </td class="weekday">
-        </tr>
-        {% endfor %}
-    </table>
-
-    <br>
-    <br>
-
-
-</body>
-</html>

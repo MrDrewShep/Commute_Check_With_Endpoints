@@ -1,54 +1,10 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>Simple Map</title>
-  <meta name="viewport" content="initial-scale=1.0">
-  <meta charset="utf-8">
-  <style>
-
-    #myform {
-      margin-top: 100px;
-      margin-left: 100px;
-    }
-
-    form {
-      display: table;
-    }
-
-    form p {
-      display: table-row;
-    }
-
-    form label {
-      display: table-cell;
-      padding-right: 10px;
-      text-align: right;
-    }
-
-    form input {
-      display: table-cell;
-    }
-
-    .texttip {
-      color: grey;
-      font-style: italic;
-    }
-
-    .controls {
-      width: 300px;
-    }
-
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-  </style>
-</head>
-
-<body>
+{% extends "layout.html" %}
+{% block body %}
+  <head>
+    <title>Commute Check Phone Verification</title>
+  </head>
+ 
+  <br>
   <div class="myform">
     <form id="authenticate" method="post" action="/account/authenticate">
       <fieldset>
@@ -69,6 +25,5 @@
     <br>
     <br>
   </div>
-</body>
-
-</html>
+    
+{% endblock %}

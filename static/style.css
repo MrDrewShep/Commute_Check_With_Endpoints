@@ -4,6 +4,81 @@ a {
 }
 
 body {
+    background: rgba(238, 238, 238);
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.body_wrapper {
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.banner_wrapper {
+    text-align: center;
+    background: black;
+    width: 100%;
+    margin-top: 25px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.banner_content {
+    font-size: 75px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #72AB00;
+    padding: 20px;
+}
+
+.main_wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    width: 100%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.description_wrapper {
+    display: inline-block;
+    clear: both;
+}
+
+.description_content {
+    width: 400px;
+    text-align: left;
+}
+
+.form_and_image_wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.two_forms {
+    display: inline-block;
+    text-align: left;
+    width: 100%;
+}
+
+.screenshot {
+    display: inline-block;
+}
+
+.footer {
+    text-align: right;
+    color: grey;
+    padding-right: 50px;
+    padding-top: 20px;
+}
+
+.footer a {
+    color: grey;
 }
 
 table {
@@ -40,3 +115,42 @@ td.tz_desc {
 td.delay_tolerance {
     text-align: center;
 }
+
+#map {
+    margin-top: 0px;
+    margin-left: 100px;
+    height: 500px;
+    width: 700px;
+  }
+
+  #myform {
+    margin-top: 100px;
+    margin-left: 100px;
+  }
+
+  #registration_form {
+    display: table;
+  }
+
+  #registration_form p {
+    display: table-row;
+  }
+
+  #registration_form label {
+    display: table-cell;
+    padding-right: 10px;
+    text-align: right;
+  }
+
+  #registration_form input {
+    display: table-cell;
+  }
+
+  .texttip {
+    color: grey;
+    font-style: italic;
+  }
+
+  .controls {
+    width: 300px;
+  }
