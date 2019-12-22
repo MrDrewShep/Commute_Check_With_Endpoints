@@ -1,5 +1,5 @@
 from flask import Blueprint, request, Response, redirect, url_for, render_template, jsonify, make_response
-from services.account_service import is_account, create_account, strip_phone, generate_authentication, validate_authentication
+from services.account_service import is_account, create_account, strip_phone, generate_authentication, validate_authentication, format_phone
 from flask_jwt_extended import set_access_cookies
 
 account_blueprint = Blueprint("account_api", __name__)

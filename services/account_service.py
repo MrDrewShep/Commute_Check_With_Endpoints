@@ -14,6 +14,9 @@ def create_otp():
 def is_account(phone):
     return Account.get_account(phone)
 
+def format_phone(phone):
+    return phone[:3] + "-" + phone[3:6] + "-" + phone[6:]
+
 def strip_phone(phone):
     new_phone = ""
     for i in phone:

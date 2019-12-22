@@ -10,11 +10,24 @@
 
 <body>
   <div class="body_wrapper">
-    <div class="banner_wrapper">
+    <div class="header_wrapper">
       <div class="banner_content">
         Commute Check
       </div class="banner_content">
-    </div class="banner_wrapper">
+      <div class="nav_wrapper">
+        <div class="user_info">
+          {% if my_account %}
+          {{my_account.fname}} {{my_account.lname}}
+          {{formatted_phone}}
+          {% endif %}
+        </div>
+        <div class="links">
+          <ul>
+            <li><a href="/route/new">Add Route</a></li>
+          </ul>
+        </div>
+      </div>
+    </div class="header_wrapper">
 
     <div class="main_wrapper">
 

@@ -17,9 +17,11 @@ body {
     flex-direction: column;
 }
 
-.banner_wrapper {
+.header_wrapper {
     text-align: center;
     background: black;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     margin-top: 25px;
     border-top-left-radius: 20px;
@@ -31,6 +33,30 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     color: #72AB00;
     padding: 20px;
+}
+
+.nav_wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #72AB00;
+    color: black;
+    padding: 20px;
+}
+
+.user_info {
+    font-size: 14px;
+    justify-content: flex-start;
+}
+
+.links {
+    font-size: 14px;
+    justify-content: flex-end;
+}
+
+.links li {
+    text-emphasis: none;
 }
 
 .main_wrapper {
@@ -83,6 +109,8 @@ body {
 
 table {
     border: 0px;
+    width: 90%;
+    font-size: 14px;
     /* border-collapse: collapse; */
 }
 
@@ -123,34 +151,34 @@ td.delay_tolerance {
     width: 700px;
   }
 
-  #myform {
-    margin-top: 100px;
-    margin-left: 100px;
-  }
+#myform {
+margin-top: 100px;
+margin-left: 100px;
+}
 
-  #registration_form {
-    display: table;
-  }
+#registration_form {
+display: table;
+}
 
-  #registration_form p {
-    display: table-row;
-  }
+#registration_form p {
+display: table-row;
+}
 
-  #registration_form label {
-    display: table-cell;
-    padding-right: 10px;
-    text-align: right;
-  }
+#registration_form label {
+display: table-cell;
+padding-right: 10px;
+text-align: right;
+}
 
-  #registration_form input {
-    display: table-cell;
-  }
+#registration_form input {
+display: table-cell;
+}
 
-  .texttip {
-    color: grey;
-    font-style: italic;
-  }
+.texttip {
+color: grey;
+font-style: italic;
+}
 
-  .controls {
-    width: 300px;
-  }
+.controls {
+width: 300px;
+}

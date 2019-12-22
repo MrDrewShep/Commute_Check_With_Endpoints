@@ -1,6 +1,6 @@
 from flask import Blueprint, request, Response, redirect, url_for, render_template
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from services.account_service import is_account
+from services.account_service import is_account, format_phone
 from services.route_service import create_route, get_all_routes, toggle_route_active_status, get_single_route, update_route, parse_waypoints_into_array
 from datetime import time, timedelta
 import json
@@ -16,6 +16,7 @@ route_blueprint = Blueprint("route_api", __name__)
 @jwt_required
 def home():
     my_account = is_account(get_jwt_identity())
+    formatted_phone = format_phone(my_account.phone)
     my_routes = get_all_routes(my_account.phone)
     for route in my_routes:
         route["local_run_time"] = str(route["local_run_time"][:5])
@@ -27,7 +28,7 @@ def home():
             route["tz_desc"] = "(MST)"
         elif route["local_timezone_offset"] == -8:
             route["tz_desc"] = "(PST)"
-    return render_template("account_home.html", my_account=my_account, my_routes=my_routes)
+    return render_template("account_home.html", my_account=my_account, my_routes=my_routes, formatted_phone=formatted_phone)
 
 # Build new route
 @route_blueprint.route('/new', methods=["GET", "POST"])
