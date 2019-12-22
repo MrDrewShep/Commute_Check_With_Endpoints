@@ -39,24 +39,33 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     background: #72AB00;
     color: black;
     padding: 20px;
 }
 
-.user_info {
+.user_info_wrapper {
     font-size: 14px;
+    display: flex;
+    flex-direction: column;
     justify-content: flex-start;
+}
+
+.user_info {
+    justify-content: flex-start;
+    text-align: left;
 }
 
 .links {
     font-size: 14px;
     justify-content: flex-end;
+    align-items: center;
 }
 
-.links li {
-    text-emphasis: none;
+.links a {
+    color: black;
 }
 
 .main_wrapper {

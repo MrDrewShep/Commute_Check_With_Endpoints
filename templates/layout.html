@@ -15,16 +15,20 @@
         Commute Check
       </div class="banner_content">
       <div class="nav_wrapper">
-        <div class="user_info">
+        <div class="user_info_wrapper">
           {% if my_account %}
-          {{my_account.fname}} {{my_account.lname}}
-          {{formatted_phone}}
+          <div class="user_info">
+            {{my_account.fname}} {{my_account.lname}}
+          </div>
+          <div class="user_info">
+            {{formatted_phone}}
+          </div>
           {% endif %}
         </div>
         <div class="links">
-          <ul>
-            <li><a href="/route/new">Add Route</a></li>
-          </ul>
+          <a href="/route/home">Home</a> | 
+          <a href="/route/new">Add Route</a> | 
+          <a>Logout</a>
         </div>
       </div>
     </div class="header_wrapper">
