@@ -35,8 +35,9 @@ def home():
 @jwt_required
 def new_route():
     my_account = is_account(get_jwt_identity())
+    formatted_phone = format_phone(my_account.phone)
     if request.method == "GET":
-        return render_template("route.html", gm_api_key=GOOGLE_MAPS_API_KEY, my_route=False)
+        return render_template("route.html", gm_api_key=GOOGLE_MAPS_API_KEY, my_route=False, my_account=my_account, formatted_phone=formatted_phone)
     elif request.method == "POST":
         form_data = request.form
         create_route(my_account, form_data)
@@ -47,10 +48,11 @@ def new_route():
 @jwt_required
 def edit_route(route_id):
     my_account = is_account(get_jwt_identity())
+    formatted_phone = format_phone(my_account.phone)
     my_route = get_single_route(route_id)
     if request.method == "GET":
         waypoints_into_array = parse_waypoints_into_array(my_route["waypoints"])
-        return render_template("route.html", gm_api_key=GOOGLE_MAPS_API_KEY, my_route=my_route, waypoints_into_array=waypoints_into_array)
+        return render_template("route.html", gm_api_key=GOOGLE_MAPS_API_KEY, my_route=my_route, my_account=my_account, formatted_phone=formatted_phone, waypoints_into_array=waypoints_into_array)
     elif request.method == "POST":
         form_data = request.form
         update_route(my_account, my_route["id"], form_data)

@@ -43,7 +43,10 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     background: #72AB00;
     color: black;
-    padding: 20px;
+    padding-left: 55px;
+    padding-right: 55px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .user_info_wrapper {

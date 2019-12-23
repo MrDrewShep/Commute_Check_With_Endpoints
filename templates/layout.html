@@ -16,19 +16,24 @@
       </div class="banner_content">
       <div class="nav_wrapper">
         <div class="user_info_wrapper">
-          {% if my_account %}
           <div class="user_info">
+            {% if my_account %}
             {{my_account.fname}} {{my_account.lname}}
+            {% else %}
+            &nbsp;
+            {% endif %}
           </div>
           <div class="user_info">
+            {% if my_account %}
             {{formatted_phone}}
+            {% else %}
+            &nbsp;
+            {% endif %}
           </div>
-          {% endif %}
         </div>
         <div class="links">
           <a href="/route/home">Home</a> | 
-          <a href="/route/new">Add Route</a> | 
-          <a>Logout</a>
+          <a href="/route/new">Add Route</a>
         </div>
       </div>
     </div class="header_wrapper">

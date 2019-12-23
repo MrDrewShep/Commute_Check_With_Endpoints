@@ -56,13 +56,14 @@ def parse_waypoints_into_array(waypoints):
         )
     return waypoints_array
 
-def compile_route_data(my_account, form_data):
+def compile_route_data(my_account, form_data, brand_new_route=False):
     google_response = json.loads(form_data["google_response"])
     
     route_data = {}
 
     route_data["phone"] = my_account.phone
-    route_data["active"] = True
+    if brand_new_route:
+        route_data["active"] = True 
     route_data["start_location"] = parse_start_location(google_response)
     route_data["start_location_type"] = form_data["start_location_type"]
     route_data["end_location"] = parse_end_location(google_response)
@@ -86,7 +87,7 @@ def compile_route_data(my_account, form_data):
     return route_data
 
 def create_route(my_account, form_data):
-    route_data = compile_route_data(my_account, form_data)
+    route_data = compile_route_data(my_account, form_data, True)
     new_route = Route(route_data)
     new_route.save()
     return "successssssss"
