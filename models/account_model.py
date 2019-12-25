@@ -24,7 +24,7 @@ class Account(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
-        return f'Account {self.phone} successfully created.'
+        return self
 
     def update(self, to_change):
         for key, value in to_change.items():

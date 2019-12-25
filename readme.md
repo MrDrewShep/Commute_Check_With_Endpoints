@@ -3,8 +3,11 @@ Just head home, and know that your defined "usual" route home is the fastest... 
 
 You'll receive an SMS alert if the system detects an "alternate" route meets your defined threshold for time savings.
 
-### Part 1 of 2
-This repo represents 1 of 2 programs that run together, to provide exception based navigation notifications for a user's commute to/from work. In this part of the service, a user registers, saving their commute data (includes a GUI with help from Google Maps APIs). The second part of the service is a job scheduler, that run analysis on user routes at the user's predefined times of day.
+### What it does
+2 components work simultaneously. 
+- The first is a Flask app with PostgreSQL database that allows users to register and manage their subscription (free) to the service. Users define turn-by-turn routes, the days/times they execute that route, and how much time saved must exist via an alternate route before they want to be notified. 
+- The second part of the service is an automated job scheduler, which at the appropriate time reaches out to Google Maps Directions API, determines if the user's preferred route is best or if the user's threshold for an alternative has been met. It then provides a text message alert if an exception exists.
+- (Note: Currently the service sends a text message whether or not the threshold for an alternate route notification is met. This is for testing purposes.)
 
 ### Why I Built This
 I know how to get to and from work. So I don't turn on my navigation. It would be extra work.

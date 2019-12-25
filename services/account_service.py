@@ -4,6 +4,7 @@ from . import bcrypt
 from random import randint
 from datetime import datetime, timedelta
 from send_sms import send_sms
+from services.log_service import log_new_user, log_error_new_user
 
 def create_otp():
     otp = str(randint(1000,9999))
@@ -30,10 +31,12 @@ def strip_phone(phone):
 def create_account(data, phone):
     new_account = Account(phone, data["fname"], data["lname"])
     try:
-        message = new_account.save()
+        my_account = new_account.save()
+        log_new_user(my_account)
     except Exception as e:
-        message = str(e)
-    return message
+        my_account = str(e)
+        log_error_new_user(e)
+    return my_account
 
 def generate_authentication(phone):
     account = is_account(phone)

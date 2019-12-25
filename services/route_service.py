@@ -1,6 +1,7 @@
 from models.route_model import Route, RouteSchema
 from datetime import time
 import json
+from services.log_service import log_new_route
 
 route_schema = RouteSchema()
 
@@ -90,6 +91,7 @@ def create_route(my_account, form_data):
     route_data = compile_route_data(my_account, form_data, True)
     new_route = Route(route_data)
     new_route.save()
+    log_new_route(new_route)
     return "successssssss"
 
 def update_route(my_account, route_id, form_data):
