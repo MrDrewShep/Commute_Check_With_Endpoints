@@ -24,3 +24,14 @@ def log_new_route(my_route):
         f.write(log_note)
     print(log_note)
 
+def log_run_route(my_route, response):
+    now = datetime.utcnow().replace(microsecond=0)
+    log_note = f'LOG>{now}>RUN_ROUTE>{my_route.id}>{my_route.phone}>\
+        {my_route.start_location}>{my_route.end_location}\n\
+            {response}'
+    with open("logs/full.txt", "a") as f:
+        f.write('\n')
+        f.write(log_note)
+    print(log_note)
+
+

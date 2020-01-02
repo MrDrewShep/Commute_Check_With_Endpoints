@@ -12,6 +12,7 @@ from sqlalchemy import create_engine, Column, Integer, String, Boolean, Time
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import commute_check
+from services.log_service import log_run_route
 
 engine = create_engine(DATABASE_URL, echo=False)
 Session = sessionmaker(bind=engine)
@@ -96,18 +97,20 @@ def scan_for_jobs():
             # next_local_run_datetime2 = datetime.now() + timedelta(seconds=30)  # Line for testing only
             new_job = scheduler.add_job(alarm, 'date', run_date=next_utc_run_datetime, args=[route], id=str(route.id))
             routes_added_to_scheduler += 1
-            print(f'Added Route: {route.id} Run date UTC: {next_utc_run_datetime}')
+            print(f'Added Route: {route.id} | Run date UTC: {next_utc_run_datetime}')
 
     my_session.close()
     print('CURRENTLY SCHEDULED JOBS')
-    print([f'Route:{job.id} at {job.next_run_time}' for job in scheduler.get_jobs()])
+    print([f'Route: {job.id} | {job.next_run_time}' for job in scheduler.get_jobs()])
     return routes_reviewed, routes_added_to_scheduler
 
 
 def alarm(route):
+    print('found')
     if True:
         response = commute_check.run_route(route)
         print('\n', response)
+        log_run_route(route, response)
 
 
 if __name__ == '__main__':
@@ -123,4 +126,6 @@ if __name__ == '__main__':
             print(f'Added {routes_added_to_scheduler} jobs to the queue, reviewed {routes_reviewed} total.')
             time.sleep(60*15)
     except (KeyboardInterrupt, SystemExit):
-        scheduler.shutdown()    
+        scheduler.shutdown()
+
+print('REACHED END OF SCHEDULER SCRIPT')
