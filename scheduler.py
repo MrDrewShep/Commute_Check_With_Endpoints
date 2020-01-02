@@ -106,10 +106,8 @@ def scan_for_jobs():
 
 
 def alarm(route):
-    print('found')
     if True:
         response = commute_check.run_route(route)
-        print('\n', response)
         log_run_route(route, response)
 
 
