@@ -30,6 +30,10 @@ def log_run_route(my_route, response):
     with open("logs/full.txt", "a") as f:
         f.write('\n')
         f.write(log_note)
-    print(log_note)
+    print("\n", log_note)
 
+# Still needed to add:
+    # Errors, at each step along the way
+    # Adjustments made to routes
+    # 
 
