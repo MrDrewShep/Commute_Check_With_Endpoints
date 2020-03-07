@@ -7,6 +7,8 @@ __pycache__
 /migrations/
 archived_docs/
 
+2020_02_03_ec2_terminal_history.txt
+
 beta_app.py
 before_running_the_app.txt
 tmux.py

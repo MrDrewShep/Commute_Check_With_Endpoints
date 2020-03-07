@@ -203,14 +203,14 @@ def suggest_alt_route(preferred_duration_w_traffic, best_avail_duration_w_traffi
 
 def suggest_preferred_route(preferred_duration_w_traffic, best_avail_duration_w_traffic, delta, phone, tolerance_seconds):
     """Sends an SMS suggesting the user take their usual route. Note: This is for testing purposes. Eventually the suggestion of a user's "usual" route would be indicated by a non-notificaiton."""
-
+    """3-7-2020 disabled the text portion of this, to make the app truly exception based."""
     preferred = convert_secs_to_hr_min_string(preferred_duration_w_traffic)
     best = convert_secs_to_hr_min_string(best_avail_duration_w_traffic)
     delta = convert_secs_to_hr_min_string(delta)
     tolerance = convert_secs_to_hr_min_string(tolerance_seconds)
 
-    text_body = f'Stick to your usual route, at {preferred}. The best route available is {best}. Your threshold for an alternative is {tolerance}.'
-    sns_api_response = send_sms.send_sms(phone, text_body)
+    text_body = f'[Text not sent] Stick to your usual route, at {preferred}. The best route available is {best}. Your threshold for an alternative is {tolerance}.'
+    sns_api_response = "[No API response, text not sent]" #send_sms.send_sms(phone, text_body)
     return text_body, sns_api_response
 
 
